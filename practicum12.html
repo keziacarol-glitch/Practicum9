@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizPulse Quote Loader</title>
+
+<style>
+body {
+  font-family: Arial;
+  background-color: lightyellow;
+  text-align: center;
+}
+
+h1 {
+  color: purple;
+}
+
+form {
+  background-color: white;
+  border: 3px solid purple;
+  border-radius: 10px;
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+}
+
+input {
+  padding: 8px;
+  margin: 8px;
+}
+
+button {
+  padding: 8px 20px;
+  background-color: purple;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#error {
+  color: red;
+}
+
+#output {
+  width: 80%;
+  margin: auto;
+  text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<h1>QuizPulse Motivation Loader</h1>
+
+<form>
+  How many quotes (1 to 5)?<br>
+  <input type="number" id="amount" min="1" max="5"><br>
+  <button type="button" onclick="getQuotes()">Get Quotes</button>
+</form>
+
+<h3 id="error"></h3>
+<div id="output"></div>
+
+<script>
+var error = document.getElementById("error");
+var output = document.getElementById("output");
+
+function getQuotes() {
+  var amount = document.getElementById("amount").value;
+
+  error.innerHTML = "";
+  output.innerHTML = "";
+
+  if (amount.trim() == "" || isNaN(amount) || !Number.isInteger(Number(amount)) || amount < 1 || amount > 5) {
+    error.innerHTML = "Enter a number between 1 and 5";
+    return;
+  }
+
+  output.innerHTML = "Loading...";
+
+  fetch("https://dummyjson.com/quotes?limit=" + amount)
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error("Network response failed");
+      }
+      return response.json();
+    })
+    .then(function(data) {
+      showQuotes(data.quotes);
+    })
+    .catch(function(err) {
+      output.innerHTML = "";
+      error.innerHTML = "Could not load quotes: " + err.message;
+    });
+}
+
+function showQuotes(list) {
+  output.innerHTML = "";
+
+  for (var i = 0; i < list.length; i++) {
+    output.innerHTML += "<p>" + (i + 1) + ". " + list[i].quote + " - " + list[i].author + "</p>";
+  }
+}
+</script>
+
+</body>
+</html>
