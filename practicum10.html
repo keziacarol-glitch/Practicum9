@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QuizPulse DOM</title>
+</head>
+<body style="font-family: Arial; text-align: center; background-color: lightyellow;">
+<h1 id="title">QuizPulse</h1>
+<input type="text" id="nameBox" placeholder="Enter your name">
+<button onclick="greet()">Join</button>
+<p id="msg"></p>
+<h2 id="time">0</h2>
+<button onclick="startTimer()">Start</button>
+<button onclick="stopTimer()">Stop</button>
+<br><br>
+<button onclick="startHint()">Show Hint</button>
+<button onclick="stopHint()">Cancel Hint</button>
+<p id="hint"></p>
+<script>
+var time = 0;
+var timer;
+var h;
+function greet() {
+  var name = document.querySelector("#nameBox").value;
+  document.querySelector("#msg").innerHTML = "Welcome " + name;
+}
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(function () {
+    time++;
+    document.querySelector("#time").innerHTML = time;
+  }, 1000);
+}
+function stopTimer() {
+  clearInterval(timer);
+}
+function startHint() {
+  h = setTimeout(function () {
+    document.querySelector("#hint").innerHTML = "Hint: CSS means Cascading Style Sheets";
+  }, 3000);
+}
+function stopHint() {
+  clearTimeout(h);
+}
+</script>
+</body>
+</html>
