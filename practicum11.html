@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QuizPulse XP Calculator</title>
+  <style>
+body {
+  font-family: Arial;
+  background-color: lightyellow;
+  text-align: center;
+}
+h1 {
+  color: purple;
+}
+form {
+  background-color: white;
+  border: 3px solid purple;
+  border-radius: 10px;
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+}
+input {
+  padding: 8px;
+  margin: 8px;
+}
+button {
+  padding: 8px 20px;
+  background-color: purple;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+<h1>QuizPulse XP Calculator</h1>
+<form>
+  Your name:<br>
+  <input type="text" id="name"><br>
+  Correct answers (out of 10):<br>
+  <input type="text" id="correct"><br>
+  <button type="button" onclick="calculate()">Submit</button>
+</form>
+<h3 id="result"></h3>
+<script>
+function calculate() {
+  var name = document.getElementById("name").value;
+  var correct = document.getElementById("correct").value;
+  var result = document.getElementById("result");
+
+  if (name.trim() == "") {
+    result.style.color = "red";
+    result.innerHTML = "Please enter your name";
+  } else if (correct.trim() == "") {
+    result.style.color = "red";
+    result.innerHTML = "Please enter the correct answers";
+  } else if (isNaN(correct)) {
+    result.style.color = "red";
+    result.innerHTML = "Only numbers are allowed";
+  } else if (correct < 0 || correct > 10) {
+    result.style.color = "red";
+    result.innerHTML = "Enter a number between 0 and 10";
+  } else {
+    var xp = correct * 10;
+    result.style.color = "green";
+    result.innerHTML = "Well done " + name + "! You earned " + xp + " XP";
+  }
+}
+</script>
+</body>
+</html>
